@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CuadreCajaService } from '../imprimir/services/cuadre.service';
-import { MessageService } from 'primeng/api';
 import { VentasService } from '../ventas/services/ventas.service';
 import { format } from 'date-fns';
+import { Router } from '@angular/router';
+import { link } from 'fs';
 
 @Component({
   selector: 'app-caja',
@@ -12,8 +12,7 @@ import { format } from 'date-fns';
   styleUrl: './caja.component.scss'
 })
 export class CajaComponent {
-
-  formId: FormGroup = new FormGroup({});
+  
   ventasProductos: any[]=[];  
   venta_total:number = 0;
   total_efectivo:number =0;
@@ -30,13 +29,11 @@ export class CajaComponent {
   
   constructor(
     private ventas:VentasService,    
-    private cuadreCaja:CuadreCajaService,    
-    private message: MessageService,   
-    private fb: FormBuilder, 
-  ){
-    
-     
-  }
+    private cuadreCaja:CuadreCajaService,
+    private router: Router 
+  ){}
+
+
   ngOnInit(): void {
     this.fecha_actual = format(this.date, 'yyyy-MM-dd HH:mm');      
   }
@@ -76,5 +73,9 @@ export class CajaComponent {
     },1000)
      
   } 
+
+  funct_nex_model_exportar(){
+    this.router.navigate(['/menu/exportar'])
+  }
 
 }

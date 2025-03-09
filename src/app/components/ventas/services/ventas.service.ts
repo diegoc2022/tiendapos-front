@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Environment } from '../../../../environments/environment';
 import { format } from 'date-fns';
+import { EnvironmentProd } from '../../../../environments/environment2';
 
 @Injectable({
     providedIn: 'root'
@@ -10,6 +11,9 @@ import { format } from 'date-fns';
 export class VentasService {
     private URL?:string;
     private API?:string
+    private URLPROD?:string;
+    private APIPROD?:string;
+
     cantidad:number =0;
     total?:number;
     form_fecha:Date = new Date();
@@ -17,7 +21,9 @@ export class VentasService {
 
    constructor(private http: HttpClient) { 
         this.URL = Environment.endpoint;
+        this.URLPROD = EnvironmentProd.endpoint;
         this.API = 'ventas';
+        this.APIPROD = 'ventas-historicos';        
     }
    
 
@@ -75,5 +81,13 @@ export class VentasService {
 
     funct_retorna_ventas_facturas(id:any){
         return this.http.get(`${this.URL}/${this.API}/factura/${id}`)
+    }
+
+    funct_registra_ventas_historicos_s(data:any[]):Observable<any[]>{             
+        return this.http.post<any[]>(`${this.URLPROD}/${this.APIPROD}`,data);        
+    }
+
+    funct_elimina_ventas_temporal_s(){
+        return  this.http.delete(`${this.URL}/${this.API}/ventasTemp`) 
     }
 }

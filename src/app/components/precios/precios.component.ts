@@ -24,7 +24,7 @@ export class PreciosComponent {
     private fb: FormBuilder,   
     private vinculos:VinculosService,
     private editar: PreciosService,
-    private messageService: MessageService
+    private message: MessageService
   ){}
 
   ngOnInit(): void {
@@ -52,7 +52,7 @@ export class PreciosComponent {
   funct_edita_precios_c(){     
     this.editar.funct_edita_precios_s(this.codigo_prod,this.data.value).subscribe({
       next:data=>{        
-        this.messageService.add({severity:'success', summary: 'Successful', detail: 'Precio editado correctamente'});            
+        this.message.add({severity:'success', summary: 'Successful', detail: 'Precio editado correctamente'});            
       }
     });
      

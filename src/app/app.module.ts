@@ -41,6 +41,7 @@ import { InventarioComponent } from './components/inventario/inventario.componen
 import { PreciosComponent } from './components/precios/precios.component';
 import { CajaComponent } from './components/caja/caja.component';
 import { SesionComponent } from './components/sesion/sesion.component';
+import { ExportarComponent } from './components/exportar/exportar.component';
 
 
 @NgModule({
@@ -55,7 +56,8 @@ import { SesionComponent } from './components/sesion/sesion.component';
     InventarioComponent,
     PreciosComponent,
     CajaComponent,
-    SesionComponent
+    SesionComponent,
+    ExportarComponent
   ],
   imports: [
     BrowserModule,
