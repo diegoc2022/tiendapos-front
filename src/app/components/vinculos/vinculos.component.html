@@ -1,0 +1,28 @@
+<p-toast />
+<div class="container-fluid">
+<div class="div_v">
+    <h5>Asociar productos:</h5>
+    <span class="pi pi-calendar-times"> Fecha: 
+      {{fecha_actual}}
+    </span> 
+    <br>
+    <br>    
+    <form [formGroup]="data">    
+    <div class="row mt-3">               
+        <div class="field col-12">                         
+            <input type="text" class="form-control form-control-sm" #codInic [placeholder]="placeholder" style="width:20vw; top:-1px;" pInputText formControlName="codigoInic" (keydown)="onEnterPressed($event)">          
+        </div> 
+    </div>
+    <div class="row spacing">               
+        <div class="col-12 field">                      
+            <input type="text" class="form-control form-control-sm" #codVinc [placeholder]="placeholder2" pInputText style="width:20vw; top:-1px;" formControlName="codigoVinc">           
+        </div> 
+    </div>   
+    <div class="row btn-position">                      
+        <div class="div-align-right">
+            <button type="button" class="btn btn-warning" (click)="funct_registra_vinculos_c();"><span class="pi pi-save"> Guardar</span></button>
+        </div>     
+    </div>   
+  </form>
+</div>
+</div>

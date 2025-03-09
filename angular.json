@@ -29,17 +29,20 @@
             "browser": "src/main.ts",
             "polyfills": [
               "zone.js"
-            ],
+            ],            
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               {
                 "glob": "**/*",
-                "input": "public"
-              }
+                "input": "public"                
+              },
+              "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css"    
+         
             ],
             "scripts": [],
             "server": "src/main.server.ts",
@@ -103,12 +106,17 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              "node_modules/primeicons/primeicons.css"
+              
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

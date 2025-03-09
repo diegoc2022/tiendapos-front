@@ -1,0 +1,47 @@
+:host ::ng-deep .p-menubar {  
+    height: 8vh;   
+    border-radius: 5px;
+    border: 1px solid; 
+    color: white;
+    margin-top: 3px;
+    margin-left:5px;   
+    margin-right: 5px; 
+    z-index: 10;
+    background: #1e3c72;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #2a5298, #1e3c72);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #2a5298, #1e3c72); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+     
+ }
+
+ :host ::ng-deep .p-menubar-item{
+    padding: 10px;
+    height: 40px; 
+    width: 170px;  
+    background:whitesmoke !important;  
+    color: black;
+    border-radius: 5px;  
+    z-index: 10;  
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+:host ::ng-deep .p-menubar-item-content, .p-menubar-submenu{   
+    height: 30px; 
+    width: 300px;   
+    z-index: 10;  
+    text-decoration: none;    
+}
+
+  
+  
+img{
+    border-radius: 5px;
+    margin-left: 5px;
+}
+  
+  
+  
+  
+  
+  
+  

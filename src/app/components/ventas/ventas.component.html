@@ -1,0 +1,285 @@
+<p-toast />
+<div class="container-fluid" > 
+<div class="conten-ppal">
+    <div class="encabezado">
+        <div class="row">
+            <div class="col-3 field">      
+            <span class="pi pi-calculator p-date">
+                Facturación:
+            </span>    
+            </div>
+            <div class="col-6 field"></div>
+            <div class="col-3 field">    
+            <span class="pi pi-calendar-times p-date">     
+                Fecha apertura: {{fecha_apertura}}     
+            </span> 
+            </div>
+        </div> 
+    </div>
+    <div class="row mt-2">    
+        <div class="col-9 field">
+            <form [formGroup]="data" (ngSubmit)="funct_retorna_productos_c()">     
+                <input #inputText type="text" class="form-control form-control-sm" formControlName="codProducto" autocomplete="off" [style]="{'width':'100%','height':'5vh'}" autofocus>
+            </form>   
+        </div>
+      <div class="col-3 field">     
+        <div class="btn-group" role="group" aria-label="Basic example" >
+            <button type="button" class="btn btn-secondary group-btn" (click)="funct_mostrar_dialog_reimprimir_factura_c();"><span class="icon-group pi pi-print"></span></button>
+            <button type="button" class="btn btn-info group-btn" (click)="funct_show_dialog_c();"><span class="icon-group pi pi-search"></span></button>
+            <button type="button" class="group-btn btn btn-success" (click)="funct_show_dialog_3_c();"><span class="icon-group pi pi-cart-plus"></span></button>
+            <button type="button" class="group-btn btn btn-warning" (click)="funct_show_dialog_2_c();"><span class="icon-group pi pi-save"></span></button>
+            <button type="button" class="group-btn btn btn-danger" (click)="funct_elimina_id_ventas_c();"><span class="icon-group pi pi-times-circle"></span></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-center">
+        <div class="card">
+        <p-table [columns]="products" sortMode="multiple" selectionMode="single" class="custom-table" styleClass="p-datatable-sm" tableStyleClass="p-datatable-striped" [value]="products"  [scrollable]="true" [(selection)]="selectedProduct1" dataKey="id" [tableStyle]="{'min-width': '50rem'}"> 
+          <ng-template pTemplate="header">
+          <tr>  
+              <th pSortableColumn="id">Item <p-sortIcon field="code"></p-sortIcon></th>
+              <th style="display:none;">Id venta</th>                        
+              <th>Código producto</th>
+              <th>Descripción</th>
+              <th>Existencia</th> 
+              <th>Precio venta</th>
+              <th class="centered">Cantidad</th>            
+              <th>Subtotal</th>      
+              <th class="centered">Acción</th>
+          </tr>
+        </ng-template>
+        <ng-template #body let-rowData let-editing="editing" *ngIf="total_articulos > 0">
+          <tr styleClass="ui-datatable-data" [ngClass]="{'row-accessories': rowData.existencia === 0}"> 
+          <td>{{rowData.id}}</td> 
+          <td style="display:none;">{{123}}</td> 
+          <td>{{rowData.codProd}}</td> 
+          <td >{{rowData.descripcion}}</td>
+          <td>
+            <div [ngClass]="rowData.existencia < '5' ? 'red-cell' : 'green-cell'">
+              {{rowData.existencia}}
+            </div>
+          </td>
+          <td>
+            <div [ngClass]=" rowData.precio_compra > rowData.precio_venta ? 'red-cell' : 'green-cell'">
+              {{rowData.precio_venta | currency:'$'}}
+            </div>          
+          </td> 
+          <td [pEditableColumn]="rowData.cantidad" pEditableColumnField="cantidad" class="centered">        
+          <p-cellEditor >
+          <ng-template #input> 
+          <form [formGroup]="data2">                       
+            <input pInputText type="text" [(ngModel)]="rowData.cantidad" [style]="{'width':'4vw','height':'4vh'}" (keydown.enter)="funct_edita_cantidad_c(rowData)" formControlName="cantidad">         
+          </form> 
+          </ng-template>
+          <ng-template #output>
+            {{rowData.cantidad}}
+          </ng-template>
+          </p-cellEditor>        
+          </td> 
+          <td>{{rowData.subtotal | currency}}</td>                       
+          <td style="flex: 5rem 5rem 5rem" class="centered">
+            <button type="button" class="group-btn btn btn-light p-button2" (click)="funct_elimina_Item_ventas_c(rowData);"><h6 class="icon-button">X</h6></button> 
+            <button type="button" *ngIf="rowData.venta_por_und" class="group-btn btn btn-light p-button3" (click)="funct_retorna_venta_por_und_c(rowData);"><span class="custom-span pi pi-eye"></span></button> 
+          </td>        
+          </tr>       
+          </ng-template>             
+        </p-table> 
+      </div> 
+      <div class="div-carrito-vacio" *ngIf="total_articulos == 0"> 
+        <img src="../assets/img/carrito5.png" alt="img-login" class="img-carrito-vacio">  
+      </div>       
+      </div> 
+
+      <div class="content-button"> 
+        <div class="row mt-0"> 
+          <div class="col-12 field">  
+          <div class="div-total-pago">
+            Total a pagar: <span class="badge bg-secondary pi pi-calculator"> {{total_venta | currency}}</span>
+          </div> 
+          <div class="div-factura">
+            Factura: <span class="badge bg-secondary pi pi-external-link"> {{factura}}</span>
+          </div>   
+          <div class="div-total_artic">
+            Artículos: <span class="badge bg-secondary pi pi-cart-arrow-down" size="large"> {{total_articulos}}</span>
+          </div>  
+        </div>
+        </div>
+        </div>
+    </div> 
+  </div>
+
+<p-dialog header="Productos:" [(visible)]="visible" styleClass="mi-dialogo">
+    <div class="div-dialogo">       
+        <div class="card">                 
+        <div class="row align-items-start">
+          <p-table #dt1 [value]="dataBuscaProductos" selectionMode="single" styleClass="p-datatable-sm p-datatable-striped" 
+          [scrollable]="true" [(selection)]="selectedProduct1" dataKey="codProd" 
+          (onRowSelect)="onRowSelect($event)" [rows]="25" [showCurrentPageReport]="true" [rowsPerPageOptions]="[25,50]"
+          [paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">          
+          <ng-template p-columnFilter #caption>         
+            <p-columnFilter type="text" field="descripcion" [showMenu]="false" [matchMode]="'contains'"></p-columnFilter>
+          </ng-template>
+          <ng-template #header>
+            <tr>                               
+                <th>Código</th>
+                <th>Descripción</th>
+                <th>Existencia</th> 
+                <th>Precio venta</th>                                  
+            </tr>
+        </ng-template>
+        <ng-template #body let-dataProductos>
+          <tr [pSelectableRow]="dataProductos">   
+            <td>{{dataProductos.codProd}}</td> 
+            <td>{{dataProductos.descripcion}}</td>
+            <td>{{dataProductos.existencia}}</td>
+            <td>{{dataProductos.precio_venta | currency}}</td>                           
+          </tr>    
+          </ng-template>  
+        </p-table>       
+        </div>      
+       </div>                   
+    </div>    
+</p-dialog>
+
+<p-dialog header="Otras ventas:" [(visible)]="visible3" styleClass="mi-dialogo3">
+  <div class="div-dialogo3">       
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col">
+          <form [formGroup]="data4" (ngSubmit)="funct_retorna_productos_otras_ventas_c();">            
+            <input id="codigoProd" type="text" pInputText class="p-inputtext-sm" [style]="{'width':'7vw','height':'5vh'}" formControlName="dlCodProducto" autofocus autocomplete="off">             
+          </form>   
+        </div>        
+      </div>
+      <hr>
+      <form [formGroup]="data5"> 
+        <div class="row field">           
+            <div class="col-2 field">
+              <label for="inputText1" class="block">Código</label>
+              <input #inputText1 type="text" pInputText formControlName="codProd" [style]="{'width':'100%','height':'5vh','background-color':'lightgray'}" readonly="true">        
+            </div>
+            <div class="col-4 field">
+              <label for="inputText2" class="block">Descripción</label>
+              <input #inputText2 type="text" pInputText formControlName="descripcion" [style]="{'width':'100%','height':'5vh','background-color':'lightgray'}" readonly="true">         
+            </div>
+            <div class="col-2 field">
+              <label for="inputText3" class="block">Existencia</label>
+              <input #inputText3 type="text" pInputText formControlName="existencia" [style]="{'width':'100%','height':'5vh','background-color':'lightgray'}" readonly="true">         
+            </div>
+            <div class="col-2 field">
+              <label for="inputText3" class="block">Cantidad</label>
+              <input #inputText4 type="text" pInputText formControlName="cant" [style]="{'width':'100%','height':'5vh','background-color':'lightgray'}" readonly="true">         
+            </div>
+            <div class="col-2 field">
+              <label for="inputText4" class="block">Total</label>
+              <input #inputText4 type="text" pInputText formControlName="precio_venta" [style]="{'width':'100%','height':'5vh'}" (keydown.enter)="funct_registra_otras_ventas_c();" >         
+            </div>    
+        </div>
+      </form> 
+  </div>               
+  </div>    
+</p-dialog>
+
+<p-dialog header="Total a pagar:" [(visible)]="visible2" [modal]="true" styleClass="mi-dialogo2">
+  <div class="div-dialogo2"> 
+    <div class="p-3">           
+      <div class="row align-items-start">        
+        <div class="col-3 field">           
+          <div class="field col-12 md:col-3">
+            <label for="currency-us">Valor total:</label>
+            <div class="div-pago-factura">
+              {{total_venta | currency}}
+            </div>
+          </div>             
+        </div> 
+      </div>
+
+      <div class="row align-items-start">
+        <div class="col-3 field">
+          <div class="field col-12 md:col-3">
+            <label for="efectivo">Efectivo:</label> 
+            <form [formGroup]="data3">                
+              <input #efectivo type="text" [(ngModel)]="total_efectivo" class="efectivo form-control form-control-sm" formControlName="efectivo" (keydown.enter)="funct_calcula_efectivo_c()" autocomplete="off" autofocus/>
+            </form>
+          </div>             
+        </div> 
+      </div>
+      
+      <div class="row align-items-start">
+        <div class="col-3 field">
+          <div class="field col-12 md:col-3">
+            <label for="currency-us">Cambio:</label>
+            <div class="div-cambio">
+              {{total_cambio | currency}}
+            </div>
+          </div>             
+        </div> 
+      </div>
+      <br>
+      <div class="row align-items-start ">
+        <div class="col-6"></div>
+        <div class="col-3">
+          <div class="div-align-right">
+            <button type="button" class="btn btn-warning" (click)="funct_imprime_facturas_c()"><span class="pi pi-print"> Imprimir</span></button>
+          </div>             
+        </div>
+        <div class="col-3">
+          <div class="div-align-right">
+            <button type="button" class="btn btn-success" (click)="funct_close_ventas_c();"><span class="pi pi-save"> Guardar</span></button>
+          </div>             
+        </div>              
+      </div>     
+     </div>         
+     </div>    
+</p-dialog>
+
+<p-dialog header="Producto unidad:" [(visible)]="visible4" styleClass="p-dialog" [style]="{'width': '80vw', 'height': '140px'}">
+  <div class="div-dialogo4">       
+      <div class="card">                 
+      <div class="row align-items-start">
+        <p-table #dt2 [value]="producto_unidad" selectionMode="single" styleClass="p-datatable-sm p-datatable-striped"
+        [scrollable]="true" scrollHeight="44vh" [(selection)]="selectedProduct2" dataKey="codProd" 
+        (onRowSelect)="onRowSelect2($event)" [showCurrentPageReport]="true" 
+        [paginator]="false" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries">          
+        <ng-template pTemplate="header">
+          <tr>                               
+              <th>Código</th>
+              <th>Descripción</th>
+              <th>Existencia</th> 
+              <th>Precio venta</th>                                  
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-dataProductos>
+        <tr [pSelectableRow]="dataProductos">   
+          <td>{{dataProductos.codProd}}</td> 
+          <td>{{dataProductos.descripcion}}</td>
+          <td>{{dataProductos.existencia}}</td>
+          <td>{{dataProductos.precio_venta | currency}}</td>                           
+        </tr>    
+        </ng-template>  
+      </p-table>       
+      </div>      
+     </div>                   
+  </div>    
+</p-dialog>
+
+<p-dialog header="Reimprimir factura:" [(visible)]="visible5" styleClass="mi-dialogo5">
+  <div class="card">
+    <div class="div-dialogo5">              
+    <div class="row">
+      <div class="field col-12">    
+        <label for="titulo">Digite factura</label>
+        <form [formGroup]="data6">                
+          <input #factura2 type="text" pInputText [style]="{'width':'12vw','height':'5vh'}" formControlName="factura" autocomplete="off" autofocus />         
+        </form>     
+      </div>      
+    </div> 
+    <div class="row mt-3">     
+      <div class="field col-12">
+        <button type="button" class="btn btn-success" (click)="funct_reimprime_facturas_c();"><span class="pi pi-save"> Reimprimir</span></button>
+      </div>
+    </div> 
+  </div>  
+</div>  
+</p-dialog>

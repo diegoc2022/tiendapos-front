@@ -1,0 +1,35 @@
+<p-toast />
+<div class="container-fluid">  
+    <div class="middle">
+      <div class="login-container">
+        <div class="div-1">
+          <img  src="../assets/img/apymes3.png" alt="" class="image-container">
+        </div>       
+        <div class="div-2 mt-3">         
+          <div class="div-3 p-2 border-0">
+            <form [formGroup]="formLogin">
+              <br>               
+               <div class="col-12 md:col-4">
+                  <p-inputgroup>
+                      <p-inputgroup-addon><i class="pi pi-user"></i> </p-inputgroup-addon>
+                      <input type="text" class="form-control form-control-sm ml-3" style="height: 39px; width:100%" formControlName="user" placeholder="Username" autocomplete="false" (keydown)="onEnterPressed($event)">         
+                  </p-inputgroup>
+                </div>             
+                <div class="col-12 md:col-4 mt-3">
+                  <p-inputgroup>
+                      <p-inputgroup-addon><i class="pi pi-lock"></i></p-inputgroup-addon>
+                      <input type="password" class="form-control form-control-sm ml-3" style="height: 39px; width:100%" formControlName="passw" placeholder="Password" autocomplete="false">         
+                  </p-inputgroup>
+                </div>                       
+                <div class="btn mt-3">                                          
+                  <button type="button" icon="pi pi-check-circle" class="btn btn-secondary mt-3" style="width: 100%; height:50px" (click)="funct_retorna_usuarios_c();">Aceptar</button> 
+                </div>                 
+            </form>
+            <div class="contrato mt-3">
+              <i>Activación servicio: <br> Desde: 02-01-2025 hasta el 02-01-2026</i>
+            </div>
+            </div>
+        </div>    
+      </div>      
+    </div>
+</div>
