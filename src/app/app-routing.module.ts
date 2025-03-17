@@ -4,7 +4,6 @@ import { LoginComponent } from './components/login/login.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { authGuard } from '../auth.guard';
 import { VentasComponent } from './components/ventas/ventas.component';
-import { DownloadsComponent } from './components/downloads/downloads.component';
 import { VinculosComponent } from './components/vinculos/vinculos.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
 import { PreciosComponent } from './components/precios/precios.component';
@@ -19,10 +18,7 @@ const routes: Routes = [
     children: [
         {
           path: 'ventas', component: VentasComponent,          
-        },
-        {
-          path: 'descargas', component: DownloadsComponent,          
-        },        
+        },             
         {
           path: 'vinculos', component: VinculosComponent,          
         },

@@ -5,7 +5,6 @@ import { SecuenciaService } from './components/secuencia/services/secuencia.serv
 import { ImpresionService } from './components/imprimir/services/impresion.service';
 import { PreciosService } from './components/precios/services/precios.service';
 import { InventarioService } from './components/inventario/services/inventario.service';
-import { DownloadsService } from './components/downloads/services/downloads.service';
 import { ProductosService } from './components/productos/services/productos.service';
 import { VinculosService } from './components/vinculos/services/vinculos.service';
 import { LoginService } from './components/login/services/login.service';
@@ -34,7 +33,6 @@ import { ToastModule } from 'primeng/toast';
 import { ProductosComponent } from './components/productos/productos.component';
 import { DialogModule } from 'primeng/dialog';
 import { CurrencyPipe } from '@angular/common';
-import { DownloadsComponent } from './components/downloads/downloads.component';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { VinculosComponent } from './components/vinculos/vinculos.component';
 import { InventarioComponent } from './components/inventario/inventario.component';
@@ -51,7 +49,6 @@ import { ExportarComponent } from './components/exportar/exportar.component';
     MenuComponent,
     VentasComponent,
     ProductosComponent,
-    DownloadsComponent,
     VinculosComponent,
     InventarioComponent,
     PreciosComponent,
@@ -79,7 +76,7 @@ import { ExportarComponent } from './components/exportar/exportar.component';
     DialogModule,
     ProgressSpinnerModule
   ],
-  providers: [
+  providers: [  
     SesionService,
     CuadreCajaService,
     CajaService,
@@ -87,7 +84,6 @@ import { ExportarComponent } from './components/exportar/exportar.component';
     ImpresionService,
     PreciosService,
     InventarioService,
-    DownloadsService,
     ProductosService,
     VinculosService,
     LoginService,

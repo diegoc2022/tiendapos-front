@@ -25,6 +25,7 @@ export class LoginComponent {
       user: ['', Validators.required],
       passw: ['', Validators.required]      
     });    
+    
   }
 
   funct_retorna_usuarios_c() {    

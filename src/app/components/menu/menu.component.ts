@@ -28,8 +28,7 @@ export class MenuComponent {
         items: [           
             {label: 'Asociar producto', icon: 'pi pi-fw pi-caret-right',routerLink:['vinculos']},
             {label: 'Editar cantidad', icon: 'pi pi-fw pi-caret-right',routerLink:['inventario']},
-            {label: 'Editar precio', icon: 'pi pi-fw pi-caret-right',routerLink:['precio']},
-            {label: 'Descargas', icon: 'pi pi-fw pi-caret-right',routerLink:['descargas']}          
+            {label: 'Editar precio', icon: 'pi pi-fw pi-caret-right',routerLink:['precio']}                 
         ]
       },      
       {
